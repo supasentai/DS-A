@@ -1,0 +1,41 @@
+using System;
+using System.Collections.Generic;
+namespace P02_CustomStack
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.Title = "Custom Stack with LinkedList";
+            var stack = new CustomStack<string>();
+            stack.Push("Hello");
+            stack.Push("world");
+            stack.Push("from");
+            stack.Push("C#");
+            Console.WriteLine($"Stack count: {stack.Count}");
+            while (!stack.IsEmpty)
+            {
+                var word = stack.Pop();
+                Console.Write($"{word} ");
+            }
+            Console.WriteLine($"\r\nStack count: {stack.Count}");
+            Console.ReadKey();
+        }
+    }
+    class CustomStack<T>
+    {
+        private readonly LinkedList<T> _list;
+        public CustomStack() => _list = new LinkedList<T>();
+        public int Count => _list.Count;
+        public bool IsEmpty => _list.Count == 0;
+        public void Push(T item) => _list.AddFirst(item);
+        public T Pop()
+        {
+            T temp = _list.First.Value;
+            _list.RemoveFirst();
+            return temp;
+        }
+        public void Clear() => _list.Clear();
+        public T Peek() => _list.First.Value;
+    }
+}
